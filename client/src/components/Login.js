@@ -9,28 +9,28 @@ const Login = ({setIsAuthenticated}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // Loader state
+  const [loading, setLoading] = useState(false); 
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true); // Show loader
+      setLoading(true); 
       const res = await axios.post('https://frenzy-assignment.onrender.com/api/auth/login', { username, password });
       localStorage.setItem('token', res.data.token);
       setIsAuthenticated(true);       
 
-      navigate('/dashboard'); // Redirect to dashboard
+      navigate('/dashboard'); 
       toast.success('Logged in successfully!', { position: 'top-right' });
-      // setLoading(false); // Hide loader
+      
       setTimeout(()=>{
         console.log('helo')
-        navigate('/dashboard'); // Redirect to dashboard
+        navigate('/dashboard'); 
       },1000)
     } catch (error) {
       setError(error.response?.data?.msg || 'Login failed');
       toast.error(error.response?.data?.msg || 'Invalid credentials', { position: 'top-right' });
-      // setLoading(false); // Hide loader
+     
     }finally{
       setLoading(false);
     }
@@ -68,9 +68,9 @@ const Login = ({setIsAuthenticated}) => {
             variant="contained"
             color="primary"
             className="bg-blue-500 hover:bg-blue-700 text-white"
-            disabled={loading} // Disable button when loading
+            disabled={loading} 
           >
-            {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'} {/* Show spinner when loading */}
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'} 
           </Button>
           <Button
             fullWidth
@@ -78,7 +78,7 @@ const Login = ({setIsAuthenticated}) => {
             color="primary"
             className="mt-4"
             onClick={handleSignupClick}
-            disabled={loading} // Disable signup button when loading
+            disabled={loading} 
           >
             Sign Up
           </Button>

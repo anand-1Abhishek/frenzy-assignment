@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Card, CardContent, Typography, Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom"; 
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';  
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -59,26 +61,30 @@ const Dashboard = () => {
         {},
         headers
       );
+
+      
+      toast.success("Friend request sent!");
+
+      setUsers(users.filter(user => user._id !== id));
+      
     } catch (error) {
       setError("Failed to send friend request");
+      toast.error("Failed to send friend request");
     }
   };
 
   const acceptFriendRequest = async (id) => {
     try {
+      const acceptedRequest = friendRequests.find(req => req._id === id);
+      
       await axios.post(
         `http://localhost:3001/api/friends/accept/${id}`,
         {},
         headers
       );
 
+      setFriends([...friends, acceptedRequest]);
       setFriendRequests(friendRequests.filter((req) => req._id !== id));
-
-      const friendsRes = await axios.get(
-        "http://localhost:3001/api/friends/allFriends",
-        headers
-      );
-      setFriends(friendsRes.data); 
     } catch (error) {
       setError("Failed to accept friend request");
     }
@@ -100,6 +106,7 @@ const Dashboard = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
+      <ToastContainer />  
       <Typography variant="h4" className="text-center mb-6">
         Dashboard
       </Typography>

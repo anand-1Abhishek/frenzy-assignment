@@ -17,7 +17,7 @@ const Signup = () => {
 
     try {
       const hobbiesArray = hobbies.split(',').map((hobby) => hobby.trim());
-      const res = await axios.post('http://localhost:3001/api/auth/signup', {
+      const res = await axios.post('https://frenzy-assignment.onrender.com/api/auth/signup', {
         username,
         password,
         name,

@@ -25,17 +25,17 @@ const Dashboard = () => {
       try {
       
         const recommendedUsersRes = await axios.get(
-          "http://localhost:3001/api/friends/recommendedUsers",
+          "https://frenzy-assignment.onrender.com/api/friends/recommendedUsers",
           headers
         );
 
         const friendsRes = await axios.get(
-          "http://localhost:3001/api/friends/allFriends",
+          "https://frenzy-assignment.onrender.com/api/friends/allFriends",
           headers
         );
 
         const requestsRes = await axios.get(
-          `http://localhost:3001/api/friends/requests`,
+          `https://frenzy-assignment.onrender.com/api/friends/requests`,
           headers
         );
 
@@ -57,7 +57,7 @@ const Dashboard = () => {
   const sendFriendRequest = async (id) => {
     try {
       await axios.post(
-        `http://localhost:3001/api/friends/request/${id}`,
+        `https://frenzy-assignment.onrender.com/api/friends/request/${id}`,
         {},
         headers
       );
@@ -78,7 +78,7 @@ const Dashboard = () => {
       const acceptedRequest = friendRequests.find(req => req._id === id);
       
       await axios.post(
-        `http://localhost:3001/api/friends/accept/${id}`,
+        `https://frenzy-assignment.onrender.com/api/friends/accept/${id}`,
         {},
         headers
       );
@@ -93,7 +93,7 @@ const Dashboard = () => {
   const unfriend = async (friendId) => {
     try {
       await axios.post(
-        `http://localhost:3001/api/friends/unfriend/${friendId}`,
+        `https://frenzy-assignment.onrender.com/api/friends/unfriend/${friendId}`,
         {},
         headers
       );

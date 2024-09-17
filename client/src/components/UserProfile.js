@@ -21,13 +21,13 @@ const UserProfile = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/api/auth/users/${userId}`, headers);
+        const response = await axios.get(`https://frenzy-assignment.onrender.com/api/auth/users/${userId}`, headers);
         setUserProfile(response.data);
 
-        const friendsRes = await axios.get('http://localhost:3001/api/friends/allFriends', headers);
+        const friendsRes = await axios.get('https://frenzy-assignment.onrender.com/api/friends/allFriends', headers);
         setIsFriend(friendsRes.data.some(friend => friend._id === userId));
 
-        const mutualRes = await axios.post(`http://localhost:3001/api/friends/mutualFriend/${userId}`, {}, headers);
+        const mutualRes = await axios.post(`https://frenzy-assignment.onrender.com/api/friends/mutualFriend/${userId}`, {}, headers);
         setMutualFriends(mutualRes.data.mutualFriends); 
       } catch (error) {
         console.error('Error fetching user profile or mutual friends', error);
@@ -40,7 +40,7 @@ const UserProfile = () => {
 
   const handleAddFriend = async () => {
     try {
-      await axios.post(`http://localhost:3001/api/friends/request/${userId}`, {}, headers);
+      await axios.post(`https://frenzy-assignment.onrender.com/api/friends/request/${userId}`, {}, headers);
       setIsFriend(true);
     } catch (error) {
       console.error('Failed to send friend request', error);
@@ -50,7 +50,7 @@ const UserProfile = () => {
 
   const handleUnfriend = async () => {
     try {
-      await axios.post(`http://localhost:3001/api/friends/unfriend/${userId}`, {}, headers);
+      await axios.post(`https://frenzy-assignment.onrender.com/api/friends/unfriend/${userId}`, {}, headers);
       setIsFriend(false);
     } catch (error) {
       console.error('Failed to unfriend user', error);

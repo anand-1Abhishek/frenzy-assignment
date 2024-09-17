@@ -79,7 +79,7 @@ const Navbar = () => {
           },
         };
         const response = await axios.get(
-          `http://localhost:3001/api/auth/user-search?username_id=${searchQuery}`,
+          `https://frenzy-assignment.onrender.com/api/auth/user-search?username_id=${searchQuery}`,
           headers
         );
         setSearchResults(response.data);

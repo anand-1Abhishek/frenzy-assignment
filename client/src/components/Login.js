@@ -17,6 +17,7 @@ const Login = () => {
       const res = await axios.post('https://frenzy-assignment.onrender.com/api/auth/login', { username, password });
       localStorage.setItem('token', res.data.token);
       toast.success('Logged in successfully!', { position: 'top-right' });
+      navigate('/dashboard')
       setTimeout(() => {
         navigate('/dashboard'); 
       }, 1000);

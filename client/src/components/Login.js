@@ -1,34 +1,43 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; 
-import { TextField, Button, Typography } from '@mui/material';
+import { TextField, Button, Typography, CircularProgress } from '@mui/material';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const Login = () => {
+const Login = ({setIsAuthenticated}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false); // Loader state
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true); // Show loader
       const res = await axios.post('https://frenzy-assignment.onrender.com/api/auth/login', { username, password });
       localStorage.setItem('token', res.data.token);
+      setIsAuthenticated(true);       
+
+      navigate('/dashboard'); // Redirect to dashboard
       toast.success('Logged in successfully!', { position: 'top-right' });
-      navigate('/dashboard')
-      setTimeout(() => {
-        navigate('/dashboard'); 
-      }, 1000);
+      // setLoading(false); // Hide loader
+      setTimeout(()=>{
+        console.log('helo')
+        navigate('/dashboard'); // Redirect to dashboard
+      },1000)
     } catch (error) {
       setError(error.response?.data?.msg || 'Login failed');
       toast.error(error.response?.data?.msg || 'Invalid credentials', { position: 'top-right' });
+      // setLoading(false); // Hide loader
+    }finally{
+      setLoading(false);
     }
   };
 
   const handleSignupClick = () => {
-    navigate('/signup'); 
+    navigate('/signup');
   };
 
   return (
@@ -59,8 +68,9 @@ const Login = () => {
             variant="contained"
             color="primary"
             className="bg-blue-500 hover:bg-blue-700 text-white"
+            disabled={loading} // Disable button when loading
           >
-            Login
+            {loading ? <CircularProgress size={24} color="inherit" /> : 'Login'} {/* Show spinner when loading */}
           </Button>
           <Button
             fullWidth
@@ -68,13 +78,14 @@ const Login = () => {
             color="primary"
             className="mt-4"
             onClick={handleSignupClick}
+            disabled={loading} // Disable signup button when loading
           >
             Sign Up
           </Button>
         </form>
         {error && <Typography color="error" className="mt-2">{error}</Typography>}
       </div>
-      <ToastContainer /> 
+      <ToastContainer />
     </div>
   );
 };

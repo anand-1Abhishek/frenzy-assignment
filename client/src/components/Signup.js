@@ -4,7 +4,7 @@ import { TextField, Button, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
-const Signup = () => {
+const Signup = ({setIsAuthenticated}) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
@@ -25,6 +25,7 @@ const Signup = () => {
         bio,
       });
       localStorage.setItem('token', res.data.token);
+      setIsAuthenticated(true);
       toast.success('User signed up successfully!', { 
         position: 'top-right', 
       });
